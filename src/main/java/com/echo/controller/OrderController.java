@@ -1,6 +1,5 @@
 package com.echo.controller;
 
-import com.echo.common.R;
 import com.echo.entity.Orders;
 import com.echo.service.OrderService;
 import lombok.extern.slf4j.Slf4j;

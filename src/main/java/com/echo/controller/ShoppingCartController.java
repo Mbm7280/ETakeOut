@@ -2,7 +2,6 @@ package com.echo.controller;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.echo.common.BaseContext;
-import com.echo.common.R;
 import com.echo.entity.ShoppingCart;
 import com.echo.service.ShoppingCartService;
 import lombok.extern.slf4j.Slf4j;

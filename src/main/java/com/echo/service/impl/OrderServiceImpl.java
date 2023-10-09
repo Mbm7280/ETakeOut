@@ -4,7 +4,6 @@ import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.IdWorker;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.echo.common.BaseContext;
-import com.echo.common.CustomException;
 import com.echo.entity.*;
 import com.echo.mapper.OrderMapper;
 import com.echo.service.*;

@@ -1,7 +1,6 @@
 package com.echo.controller;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
-import com.echo.common.R;
 import com.echo.entity.User;
 import com.echo.service.UserService;
 import com.echo.utils.ValidateCodeUtils;

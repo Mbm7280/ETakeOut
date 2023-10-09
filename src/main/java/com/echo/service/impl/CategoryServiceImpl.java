@@ -3,7 +3,6 @@ package com.echo.service.impl;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 
-import com.echo.common.CustomException;
 import com.echo.entity.Category;
 import com.echo.entity.Dish;
 import com.echo.entity.Setmeal;

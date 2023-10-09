@@ -2,7 +2,6 @@ package com.echo.filter;
 
 import com.alibaba.fastjson.JSON;
 import com.echo.common.BaseContext;
-import com.echo.common.R;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.util.AntPathMatcher;
 

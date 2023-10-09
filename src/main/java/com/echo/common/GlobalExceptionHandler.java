@@ -1,48 +1,54 @@
 package com.echo.common;
 
-import lombok.extern.slf4j.Slf4j;
-import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindException;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
-
-import java.sql.SQLIntegrityConstraintViolationException;
 
 /**
  * 全局异常处理
+ * Created by macro on 2020/2/27.
  */
-@ControllerAdvice(annotations = {RestController.class, Controller.class})
-@ResponseBody
-@Slf4j
+@ControllerAdvice
 public class GlobalExceptionHandler {
 
-    /**
-     * 异常处理方法
-     * @return
-     */
-    @ExceptionHandler(SQLIntegrityConstraintViolationException.class)
-    public R<String> exceptionHandler(SQLIntegrityConstraintViolationException ex){
-        log.error(ex.getMessage());
-
-        if(ex.getMessage().contains("Duplicate entry")){
-            String[] split = ex.getMessage().split(" ");
-            String msg = split[2] + "已存在";
-            return R.error(msg);
+    @ResponseBody
+    @ExceptionHandler(value = ApiException.class)
+    public Result handle(ApiException e) {
+        if (e.getErrorCode() != null) {
+            return Result.failed(e.getErrorCode());
         }
-
-        return R.error("未知错误");
+        return Result.failed(e.getMessage());
     }
 
-    /**
-     * 异常处理方法
-     * @return
-     */
-    @ExceptionHandler(CustomException.class)
-    public R<String> exceptionHandler(CustomException ex){
-        log.error(ex.getMessage());
-
-        return R.error(ex.getMessage());
+    @ResponseBody
+    @ExceptionHandler(value = MethodArgumentNotValidException.class)
+    public Result handleValidException(MethodArgumentNotValidException e) {
+        BindingResult bindingResult = e.getBindingResult();
+        String message = null;
+        if (bindingResult.hasErrors()) {
+            FieldError fieldError = bindingResult.getFieldError();
+            if (fieldError != null) {
+                message = fieldError.getField()+fieldError.getDefaultMessage();
+            }
+        }
+        return Result.validateFailed(message);
     }
 
+    @ResponseBody
+    @ExceptionHandler(value = BindException.class)
+    public Result handleValidException(BindException e) {
+        BindingResult bindingResult = e.getBindingResult();
+        String message = null;
+        if (bindingResult.hasErrors()) {
+            FieldError fieldError = bindingResult.getFieldError();
+            if (fieldError != null) {
+                message = fieldError.getField()+fieldError.getDefaultMessage();
+            }
+        }
+        return Result.validateFailed(message);
+    }
 }
