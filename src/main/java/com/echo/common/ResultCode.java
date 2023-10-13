@@ -69,6 +69,20 @@ public enum ResultCode implements IErrorCode {
 
     THE_DEFAULT_ADDRESS_UPDATE_FAILED(1010, "默认地址设置失败"),
 
+    THE_CATEGORY_SAVE_FAILED(1011, "分类保存失败"),
+
+    THE_CATEGORY_QUERY_FAILED(1012, "分类查询失败"),
+
+
+    THE_CATEGORY_UPDATE_FAILED(1013, "分类修改失败"),
+
+    THE_CATEGORY_HAS_DISHES(1014,"当前分类下关联了菜品"),
+
+    THE_CATEGORY_HAS_MEALS(1015,"当前分类下关联了套餐"),
+
+    THE_CATEGORY_DELETE_FAILED(1016,"分类删除失败"),
+
+
 
     ;
 
