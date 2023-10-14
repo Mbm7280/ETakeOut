@@ -82,6 +82,13 @@ public enum ResultCode implements IErrorCode {
 
     THE_CATEGORY_DELETE_FAILED(1016,"分类删除失败"),
 
+    THE_DISH_SAVE_FAILED(1017,"菜品保存失败"),
+
+    THE_DISH_QUERY_FAILED(1018,"菜品查询失败"),
+
+    THE_DISH_UPDATE_FAILED(1019,"菜品更新失败"),
+
+
 
 
     ;

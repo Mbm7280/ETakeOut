@@ -50,7 +50,6 @@ public class CommonController {
             //目录不存在，需要创建
             dir.mkdirs();
         }
-
         try {
             //将临时文件转存到指定位置
             file.transferTo(new File(basePath + fileName));
