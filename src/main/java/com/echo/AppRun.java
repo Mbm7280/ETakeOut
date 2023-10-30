@@ -1,20 +1,22 @@
 package com.echo;
 
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.boot.web.servlet.ServletComponentScan;
-import org.springframework.cache.annotation.EnableCaching;
-import org.springframework.transaction.annotation.EnableTransactionManagement;
 
-@Slf4j
+/****************************************************
+ * 创建人：@author ECHO
+ * 创建时间: 2023/10/14 17:02
+ * 文件名称: AppRun
+ * 文件描述: [启动类]
+ * version：1.0
+ * All rights Reserved, Designed By ECHO
+ *
+ ********************************************************/
 @SpringBootApplication
-@ServletComponentScan
-@EnableTransactionManagement
-@EnableCaching //开启Spring Cache注解方式是缓存功能
 public class AppRun {
+
     public static void main(String[] args) {
-        SpringApplication.run(AppRun.class,args);
+        SpringApplication.run(AppRun.class, args);
         System.out.println("       !       \n" +
                 "       !       \n" +
                 "       ^       \n" +
@@ -47,4 +49,5 @@ public class AppRun {
                 "       .      \n" +
                 "    启动成功");
     }
+
 }
