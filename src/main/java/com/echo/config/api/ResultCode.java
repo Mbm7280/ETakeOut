@@ -61,6 +61,13 @@ public enum ResultCode implements IErrorCode {
 
     THE_USER_DELETE_FAILED(1019, "删除用户失败，请稍后重试！"),
 
+    THE_ADDRESS_ADD_FAILED(1020, "新增地址失败，请稍后重试！"),
+
+    THE_ADDRESS_QUERY_FAILED(1021, "查询地址失败，请稍后重试！"),
+
+    THE_ADDRESS_UPDATE_FAILED(1022, "修改地址失败，请稍后重试！"),
+
+
     ;
 
     private long code;

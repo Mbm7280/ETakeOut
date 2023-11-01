@@ -1,8 +1,10 @@
 package com.echo.modules.bus.model;
 
 import com.baomidou.mybatisplus.annotation.TableName;
+
 import java.io.Serializable;
 import java.util.Date;
+
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Getter;
@@ -64,7 +66,7 @@ public class BusAddressBook implements Serializable {
     private String label;
 
     @ApiModelProperty("默认 0 否 1是")
-    private Boolean isDefault;
+    private Integer isDefault;
 
     @ApiModelProperty("创建时间")
     private Date createTime;
@@ -79,7 +81,7 @@ public class BusAddressBook implements Serializable {
     private Long updateUser;
 
     @ApiModelProperty("是否删除 0 否 1是")
-    private Boolean isDeleted;
+    private Integer isDeleted;
 
 
 }
