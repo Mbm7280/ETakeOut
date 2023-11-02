@@ -67,6 +67,14 @@ public enum ResultCode implements IErrorCode {
 
     THE_ADDRESS_UPDATE_FAILED(1022, "修改地址失败，请稍后重试！"),
 
+    THE_CATEGORY_ADD_FAILED(1023, "新增分类失败，请稍后重试！"),
+
+    THE_CATEGORY_QUERY_FAILED(1024, "获取分类失败，请稍后重试！"),
+
+    THE_CATEGORY_DELETE_FAILED(1025, "删除分类失败，请稍后重试！"),
+
+    THE_CATEGORY_UPDATE_FAILED(1026, "修改分类失败，请稍后重试！"),
+
 
     ;
 

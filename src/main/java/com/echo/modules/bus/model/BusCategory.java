@@ -1,8 +1,10 @@
 package com.echo.modules.bus.model;
 
 import com.baomidou.mybatisplus.annotation.TableName;
+
 import java.io.Serializable;
 import java.util.Date;
+
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Getter;
@@ -49,7 +51,7 @@ public class BusCategory implements Serializable {
     private Long updateUser;
 
     @ApiModelProperty("1 -> 删除 0 -> 未删除")
-    private Boolean isDeleted;
+    private Integer isDeleted;
 
 
 }
