@@ -75,6 +75,10 @@ public enum ResultCode implements IErrorCode {
 
     THE_CATEGORY_UPDATE_FAILED(1026, "修改分类失败，请稍后重试！"),
 
+    THE_DISH_ADD_FAILED(1027, "新增菜品失败，请稍后重试！"),
+
+    THE_DISH_QUERY_FAILED(1028, "获取菜品失败，请稍后重试！"),
+
 
     ;
 
