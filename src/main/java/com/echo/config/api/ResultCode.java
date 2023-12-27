@@ -80,6 +80,9 @@ public enum ResultCode implements IErrorCode {
     THE_DISH_QUERY_FAILED(1028, "获取菜品失败，请稍后重试！"),
 
 
+    THE_USERNAME_HAS_EXISTED(1029, "该用户名已存在，请更换重试！"),
+
+
     ;
 
     private long code;
