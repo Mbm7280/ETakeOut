@@ -1,6 +1,7 @@
 package com.echo.utils;
 
 import cn.hutool.core.date.DateUtil;
+import cn.hutool.core.util.ObjectUtil;
 import cn.hutool.core.util.StrUtil;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
@@ -139,16 +140,18 @@ public class JwtTokenUtil {
      * @return
      */
     public String refreshHeadToken(String oldToken) {
+        // 判空校验
         if(StrUtil.isEmpty(oldToken)){
             return null;
         }
+        // 获取token
         String token = oldToken.substring(tokenHead.length());
         if(StrUtil.isEmpty(token)){
             return null;
         }
         //token校验不通过
         Claims claims = getClaimsFromToken(token);
-        if(claims==null){
+        if(ObjectUtil.isEmpty(claims)){
             return null;
         }
         //如果token已经过期，不支持刷新

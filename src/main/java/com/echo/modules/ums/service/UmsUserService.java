@@ -3,6 +3,9 @@ package com.echo.modules.ums.service;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.echo.config.api.Result;
+import com.echo.modules.bus.dto.req.AllowUserRoleReqDTO;
+import com.echo.modules.bus.dto.req.UpdateUserInfoByUserIdReqDTO;
+import com.echo.modules.bus.dto.res.GetUserInfoResDTO;
 import com.echo.modules.ums.dto.req.LoginReqDTO;
 import com.echo.modules.ums.dto.req.RegisterReqDTO;
 import com.echo.modules.ums.dto.req.UpdateUserPasswordReqDTO;
@@ -44,6 +47,16 @@ public interface UmsUserService extends IService<UmsUser> {
      */
     Result<LoginResDTO> login(LoginReqDTO loginReqDTO);
 
+
+    /**
+     * 获取当前登录用户信息
+     *
+     * @param userName
+     * @return
+     */
+    Result<GetUserInfoResDTO> getUserInfo(String userName);
+
+
     /**
      * 刷新token
      *
@@ -58,6 +71,13 @@ public interface UmsUserService extends IService<UmsUser> {
      */
     UserDetails loadUserByUsername(String username);
 
+
+    /**
+     * 获取指定用户信息
+     */
+    Result<UmsUser> getUserInfoByUserId(Long userId);
+
+
     /**
      * 获取指定用户的可访问资源
      */
@@ -67,7 +87,7 @@ public interface UmsUserService extends IService<UmsUser> {
     /**
      * 根据用户名获取后台管理员
      */
-    UmsUser getAdminByUsername(String username);
+    UmsUser getUserInfoByUserName(String userName);
 
 
     /**
@@ -78,12 +98,12 @@ public interface UmsUserService extends IService<UmsUser> {
     /**
      * 根据用户名或昵称分页查询用户
      */
-    Result<Page<UmsUser>> getPageUserListByKeyword(String keyword, Integer pageSize, Integer pageNum);
+    Result<Page<UmsUser>> getPageUserListByUserName(String userName, Integer pageSize, Integer pageNum);
 
     /**
      * 修改指定用户信息
      */
-    Result updateUserInfoByUserId(Long userId, UmsUser userInfo);
+    Result updateUserInfo(UpdateUserInfoByUserIdReqDTO reqDTO);
 
 
     /**
@@ -104,12 +124,11 @@ public interface UmsUserService extends IService<UmsUser> {
     /**
      * 修改用户角色关系
      *
-     * @param userId
-     * @param roleIds
+     * @param allowUserRoleReqDTO
      * @return
      */
     @Transactional
-    Result allowUserRole(Long userId, List<Long> roleIds);
+    Result allowUserRole(AllowUserRoleReqDTO allowUserRoleReqDTO);
 
     /**
      * 获取缓存服务

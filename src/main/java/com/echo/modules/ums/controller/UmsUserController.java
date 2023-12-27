@@ -1,17 +1,17 @@
 package com.echo.modules.ums.controller;
 
 
-import cn.hutool.core.collection.CollUtil;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.echo.config.api.Result;
+import com.echo.modules.bus.dto.req.AllowUserRoleReqDTO;
+import com.echo.modules.bus.dto.req.UpdateUserInfoByUserIdReqDTO;
+import com.echo.modules.bus.dto.res.GetUserInfoResDTO;
 import com.echo.modules.ums.dto.req.LoginReqDTO;
 import com.echo.modules.ums.dto.req.RegisterReqDTO;
 import com.echo.modules.ums.dto.req.UpdateUserPasswordReqDTO;
 import com.echo.modules.ums.dto.res.LoginResDTO;
 import com.echo.modules.ums.dto.res.RefreshTokenResDTO;
-import com.echo.modules.ums.model.UmsRole;
 import com.echo.modules.ums.model.UmsUser;
-import com.echo.modules.ums.service.UmsRoleService;
 import com.echo.modules.ums.service.UmsUserService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -23,10 +23,6 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import java.security.Principal;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.stream.Collectors;
 
 import static com.echo.config.api.ResultCode.THE_AUTHORIZED_FAILED;
 
@@ -54,8 +50,6 @@ public class UmsUserController {
     @Autowired
     private UmsUserService userService;
 
-    @Autowired
-    private UmsRoleService roleService;
 
     @ApiOperation(value = "用户注册")
     @PostMapping(value = "/register")
@@ -69,31 +63,19 @@ public class UmsUserController {
         return userService.login(loginReqDTO);
     }
 
+    @ApiOperation(value = "获取当前登录用户信息")
+    @GetMapping(value = "/getUserInfo")
+    public Result<GetUserInfoResDTO> getUserInfo(Principal principal) {
+        if (principal == null) {
+            return Result.failed(THE_AUTHORIZED_FAILED);
+        }
+        return userService.getUserInfo(principal.getName());
+    }
 
     @ApiOperation(value = "刷新token")
     @GetMapping(value = "/refreshToken")
     public Result<RefreshTokenResDTO> refreshToken(HttpServletRequest request) {
         return userService.refreshToken(request);
-    }
-
-    @ApiOperation(value = "获取当前登录用户信息")
-    @GetMapping(value = "/getUserInfo")
-    public Result getUserInfo(Principal principal) {
-        if (principal == null) {
-            return Result.failed(THE_AUTHORIZED_FAILED);
-        }
-        String username = principal.getName();
-        UmsUser umsUser = userService.getAdminByUsername(username);
-        Map<String, Object> data = new HashMap<>();
-        data.put("username", umsUser.getUsername());
-        data.put("menus", roleService.getMenuListByUserId(umsUser.getId()));
-        data.put("icon", umsUser.getIcon());
-        List<UmsRole> roleList = userService.getRoleListByUserId(umsUser.getId());
-        if (CollUtil.isNotEmpty(roleList)) {
-            List<String> roles = roleList.stream().map(UmsRole::getRoleName).collect(Collectors.toList());
-            data.put("roles", roles);
-        }
-        return Result.success(data);
     }
 
     @ApiOperation(value = "登出功能")
@@ -103,24 +85,23 @@ public class UmsUserController {
     }
 
     @ApiOperation("根据用户名或姓名分页获取用户列表")
-    @GetMapping(value = "/getPageUserListByKeyword")
-    public Result<Page<UmsUser>> getPageUserListByKeyword(@RequestParam(value = "keyword", required = false) String keyword,
-                                                          @RequestParam(value = "pageSize", defaultValue = "5") Integer pageSize,
-                                                          @RequestParam(value = "pageNum", defaultValue = "1") Integer pageNum) {
-        return userService.getPageUserListByKeyword(keyword, pageSize, pageNum);
+    @GetMapping(value = "/getPageUserListByUserName")
+    public Result<Page<UmsUser>> getPageUserListByUserName(@RequestParam(value = "userName", required = false) String userName,
+                                                           @RequestParam(value = "pageSize", defaultValue = "5") Integer pageSize,
+                                                           @RequestParam(value = "pageNum", defaultValue = "1") Integer pageNum) {
+        return userService.getPageUserListByUserName(userName, pageSize, pageNum);
     }
 
     @ApiOperation("获取指定用户信息")
     @GetMapping(value = "/getUserInfoByUserId/{userId}")
     public Result<UmsUser> getUserInfoByUserId(@PathVariable Long userId) {
-        UmsUser userInfo = userService.getById(userId);
-        return Result.success(userInfo);
+        return userService.getUserInfoByUserId(userId);
     }
 
     @ApiOperation("修改指定用户信息")
-    @PutMapping(value = "/updateUserInfoByUserId/{userId}")
-    public Result updateUserInfoByUserId(@PathVariable Long userId, @RequestBody UmsUser userInfo) {
-        return userService.updateUserInfoByUserId(userId, userInfo);
+    @PutMapping(value = "/updateUserInfo")
+    public Result updateUserInfo(@RequestBody UpdateUserInfoByUserIdReqDTO reqDTO) {
+        return userService.updateUserInfo(reqDTO);
     }
 
     @ApiOperation("修改指定用户密码")
@@ -137,9 +118,8 @@ public class UmsUserController {
 
     @ApiOperation("给用户分配角色")
     @PostMapping(value = "/allowUserRole")
-    public Result allowUserRole(@RequestParam("userId") Long userId,
-                                @RequestParam("roleIds") List<Long> roleIds) {
-        return userService.allowUserRole(userId, roleIds);
+    public Result allowUserRole(@RequestBody AllowUserRoleReqDTO allowUserRoleReqDTO) {
+        return userService.allowUserRole(allowUserRoleReqDTO);
     }
 
 }
